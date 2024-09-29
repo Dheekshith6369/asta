@@ -1,0 +1,72 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+class Train {
+public:
+    int trainNumber;
+    string trainName;
+    string source;
+    string destination;
+    int seatsAvailable;
+
+    Train(int number, string name, string src, string dest, int seats) {
+        trainNumber = number;
+        trainName = name;
+        source = src;
+        destination = dest;
+        seatsAvailable = seats;
+    }
+
+    void displayDetails() {
+        cout << "Train Number: " << trainNumber << endl;
+        cout << "Train Name: " << trainName << endl;
+        cout << "Source: " << source << endl;
+        cout << "Destination: " << destination << endl;
+        cout << "Seats Available: " << seatsAvailable << endl;
+    }
+};
+
+class RailwayManagement {
+    vector<Train> trains;
+
+public:
+    void addTrain(int number, string name, string src, string dest, int seats) {
+        Train newTrain(number, name, src, dest, seats);
+        trains.push_back(newTrain);
+        cout << "Train added successfully." << endl;
+    }
+
+    void viewTrains() {
+        for (const auto &train : trains) {
+            train.displayDetails();
+            cout << "------------------------" << endl;
+        }
+    }
+
+    void bookTicket(int trainNumber) {
+        for (auto &train : trains) {
+            if (train.trainNumber == trainNumber) {
+                if (train.seatsAvailable > 0) {
+                    train.seatsAvailable--;
+                    cout << "Ticket booked successfully." << endl;
+                } else {
+                    cout << "No seats available." << endl;
+                }
+                return;
+            }
+        }
+        cout << "Train not found." << endl;
+    }
+
+    void cancelTicket(int trainNumber) {
+        for (auto &train : trains) {
+            if (train.trainNumber == trainNumber) {
+                train.seatsAvailable++;
+                cout << "Ticket cancelled successfully." << endl;
+                return;
+            }
+        }
+     
